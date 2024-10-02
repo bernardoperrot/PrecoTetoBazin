@@ -5,8 +5,6 @@ acao = str(input("Digite o Ticker da empresa: "))
 acao = acao.upper()
 
 ativo = yf.Ticker(acao+".SA")
-# acao = "CAML3"
-# ativo= yf.Ticker("CAML3.SA")
 dolar = yf.Ticker("USDBRL=X")
 dividend_info = ativo.dividends
 
