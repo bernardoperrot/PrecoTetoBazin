@@ -1,10 +1,11 @@
 import yfinance as yf
 from datetime import datetime, timedelta
 
-acao = str(input("Digite o Ticker da empresa: "))
+acao = str(input("Digite o Ticker da Stock: "))
+div_min = float(input("Dividendos minimos %: "))
 acao = acao.upper()
 
-ativo = yf.Ticker(acao+".SA")
+ativo = yf.Ticker(acao)
 
 
 dividend_info = ativo.dividends
@@ -36,20 +37,17 @@ for i in filtered_dividends:
     total = round(total + dividend, 4)
     count = count -1
 
-preco_teto = round(total*16.6, 3)
+preco_teto = round(total*(100/div_min), 3)
 yield_total = round((total/preco)*100, 3)
-if preco_teto > preco:
-    margem = round(((preco_teto-preco)/preco_teto)*100, 2)
-else:
-    margem = round(((preco_teto-preco)/preco)*100, 2)
+margem = round(((preco_teto-preco)/preco)*100, 2)
 print('------------------------------------------------------------------------')
-print(f'| Dividendos totais nos ultimos 12 meses: R$ {total}, Yield: {yield_total} % |')
+print(f'| Dividendos totais nos ultimos 12 meses: $ {total}, Yield: {yield_total} % |')
 print('------------------------------------------------------------------------')
 print('------------------------')
-print(f'| Preco teto: R$ {preco_teto} |')
+print(f'| Preco teto: $ {preco_teto} |')
 print('------------------------')
 print('------------------------')
-print(f'| Preco atual: R$ {preco} |')
+print(f'| Preco atual: $ {preco} |')
 print('------------------------')
 print('-----------------------------------')
 print(f'| Margem de segurança: {margem} % |')
